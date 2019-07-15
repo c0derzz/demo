@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 import scrapy
+import os
 from demo.items import WeatherItem
 
 class WeatherSpider(scrapy.Spider):
     name = 'weather'
     allowed_domains = ['weather.com.cn']
+    # 新添加的代码
+    custom_settings = { "USER_AGENT": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:67.0) Gecko/20100101 Firefox/67.0", }
     start_urls = ['http://www.weather.com.cn/weather/101010100.shtml']
 
     def parse(self, response):
@@ -22,4 +25,8 @@ class WeatherSpider(scrapy.Spider):
             item['wind'] = windStr
             items.append(item)
         print(items)
+        print(os.getcwd())
         return items
+if __name__ == '__main__':
+    from scrapy import cmdline
+    cmdline.execute("scrapy crawl weather".split())

@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-
+import os
+import json
+import codecs
 # Define your item pipelines here
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
@@ -8,9 +10,15 @@
 
 class DemoPipeline(object):
     def process_item(self, item, spider):
-        print("-----process_item excute-----",spider.name)
+        '''
+        保存爬取的数据到json中
+        :param item:
+        :param spider:
+        :return:
+        '''
+        base_dir = os.getcwd()
+        filename = 'D:\work-self\scrapy-demo\demo\demo\\data\\weather.json'
+        with codecs.open(filename, 'a') as f:
+            line = json.dumps(dict(item), ensure_ascii=False) + '\n'
+            f.write(line)
         return item
-    def open_spider(self,spider):
-        print("-----open_spider excute-----",spider.name)
-    def close_spider(self,spider):
-        print("-----close_spider excute-----",spider.name)
