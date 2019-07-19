@@ -57,8 +57,6 @@ def check_save_proxy(path='', data=[]):
     if path and data:
         threads = []
         backValue = Queue()
-        f = open(path, 'a')
-        f.truncate()
         #http_pattern = re.compile(r'http?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')  # 匹配模式
         #https_pattern = re.compile(r'https?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')  # 匹配模式
         for d in data:
@@ -75,11 +73,14 @@ def check_save_proxy(path='', data=[]):
                 print("telnet fail:", ip + ":" + pt)
         for i in range(len(data)):
             threads[i].join()
-        print("执行成功")
+        f = open(path, 'a')
+        f.truncate()
         for _ in range(len(data)):
             success_ip=backValue.get()
             print("成功ip:", success_ip)
             f.write(success_ip+"\n")
+        f.flush()
+        f.close()
     raise Exception("path and data can't be empty at the same time")
 
 '''
