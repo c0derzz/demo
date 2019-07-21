@@ -88,7 +88,7 @@ def main():
     #循环执行http数据 telnet判断有效性
     if len(httpResult) > 0:
         threads = []
-        open("D:\work-self\scrapy-demo\demo\demo\data\ip_http.txt", "a").truncate()
+        open("D:\spider-workspace\demo\demo\data\ip_http.txt", "a").truncate()
         for i in httpResult:
             ip = str(i.split(":")[-2][2:].strip())
             pt = str(i.split(":")[-1].strip())
@@ -104,7 +104,7 @@ def main():
     #循环https 数据
     if len(httpsResult) > 0:
         threads_https = []
-        open("D:\work-self\scrapy-demo\demo\demo\data\ip_https.txt", "a").truncate()
+        open("D:\spider-workspace\demo\demo\data\ip_https.txt", "a").truncate()
         for i in httpsResult:
             ip = str(i.split(":")[-2][2:].strip())
             pt = str(i.split(":")[-1].strip())

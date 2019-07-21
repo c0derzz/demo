@@ -70,18 +70,22 @@ def check_save_proxy(path='', data=[]):
                 threads.append(t)
             except Exception as ex:
                 print("异常信息：%s" % ex)
-                print("telnet fail:", ip + ":" + pt)
         for i in range(len(data)):
             threads[i].join()
+        datas = []
+        print(backValue.qsize())
+        for _ in range(backValue.qsize()):
+            success_ip = backValue.get()
+            datas.append(success_ip)
+        file_data = "\n".join(datas)
+        print("文件内容为：", file_data)
         f = open(path, 'a')
         f.truncate()
-        for _ in range(len(data)):
-            success_ip=backValue.get()
-            print("成功ip:", success_ip)
-            f.write(success_ip+"\n")
+        f.write(file_data)
         f.flush()
         f.close()
-    raise Exception("path and data can't be empty at the same time")
+    else:
+        print("文件路径和数据不能为空")
 
 '''
 检查ip端口是否可用
@@ -106,9 +110,9 @@ def main():
         print("没有可执行数据")
 
     if len(http_proxy_list) > 0:
-        check_save_proxy("D:\work-self\scrapy-demo\demo\demo\data\http.txt",http_proxy_list)
+        check_save_proxy("D:\spider-workspace\demo\demo\data\http.txt",http_proxy_list)
     if len(https_proxy_list) > 0:
-        check_save_proxy("D:\work-self\scrapy-demo\demo\demo\data\https.txt", https_proxy_list)
+        check_save_proxy("D:\spider-workspace\demo\demo\data\https.txt", https_proxy_list)
 
 
 if __name__ == '__main__':
